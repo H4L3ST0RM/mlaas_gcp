@@ -9,9 +9,9 @@ HEADERS = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
 def flask_app():
     app = Flask(__name__)
-    gender = pickle.load(open('./src/gender_predictor.pkl', 'rb'))
-    height = pickle.load(open('./src/height_predictor.pkl', 'rb'))
-    weight= pickle.load(open('./src/weight_predictor.pkl', 'rb'))
+    gender = pickle.load(open('./gender_predictor.pkl', 'rb'))
+    height = pickle.load(open('./height_predictor.pkl', 'rb'))
+    weight= pickle.load(open('./weight_predictor.pkl', 'rb'))
 
 
     @app.route('/', methods=['GET'])
