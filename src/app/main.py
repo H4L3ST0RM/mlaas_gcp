@@ -7,6 +7,8 @@ import pickle
 import numpy as np
 HEADERS = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
+App = flask_app.factory.create_app(celery=flask_app.celery)
+
 def flask_app():
     app = Flask(__name__)
     gender = pickle.load(open('./gender_predictor.pkl', 'rb'))
