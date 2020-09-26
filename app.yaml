@@ -1,3 +1,14 @@
 #app.yaml
-runtime: python38
+runtime: python37
 
+instance_class: F1
+
+handlers:
+# Matches requests to /images/... to files in static/images/...
+- url: /MLAPI
+  static_dir: MLAPI/src
+
+- url: /.*
+  secure: always
+  redirect_http_response_code: 301
+  script: auto
