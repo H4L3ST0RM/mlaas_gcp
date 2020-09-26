@@ -1,6 +1,6 @@
 import os
 from flask import Flask, jsonify, request
-
+import app as flask_app
 import json
 #from prediction import predict
 import pickle
