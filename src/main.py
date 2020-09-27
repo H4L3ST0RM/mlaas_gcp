@@ -45,6 +45,41 @@ def predict_gender():
     y_pred = int(gender.predict(x)[0])
     return jsonify({"predict gender":y_pred})
 
+@app.route('/gender_model', methods=['GET'])
+def get_gender_model():
+    inter = gender.intercept_.tolist()
+    coefs = gender.coef_.tolist()
+    params = {"model": str(gender),"intercept": inter, "coefficients":coefs}
+    params.update(gender.get_params())
+    return jsonify(params)
+
+
+
+@app.route('/gender_model', methods=['GET'])
+def get_gender_model():
+    inter = gender.intercept_.tolist()
+    coefs = gender.coef_.tolist()
+    params = {"model": str(gender),"intercept": inter, "coefficients":coefs}
+    params.update(gender.get_params())
+    return jsonify(params)
+
+
+@app.route('/height_model', methods=['GET'])
+def get_height_model():
+    inter = height.intercept_.tolist()
+    coefs = height.coef_.tolist()
+    params = {"model": str(height),"intercept": inter, "coefficients":coefs}
+    params.update(height.get_params())
+    return jsonify(params)
+
+
+@app.route('/weight_model', methods=['GET'])
+def get_weight_model():
+    inter = weight.intercept_.tolist()
+    coefs = weight.coef_.tolist()
+    params = {"model": str(weight),"intercept": inter, "coefficients":coefs}
+    params.update(weight.get_params())
+    return jsonify(params)
 
 if __name__ == '__main__':
     # This is used when running locally only. When deploying to Google App
