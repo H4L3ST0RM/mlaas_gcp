@@ -42,7 +42,7 @@ def predict_gender():
     x = np.array([float(to_predict[col]) for col in ["height","weight"]])
     x = x.reshape(1,-1)
     print(to_predict)
-    y_pred = gender.predict(x)[0]
+    y_pred = int(gender.predict(x)[0])
     return jsonify({"predict gender":y_pred})
 
 
