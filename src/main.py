@@ -45,15 +45,6 @@ def predict_gender():
     y_pred = int(gender.predict(x)[0])
     return jsonify({"predict gender":y_pred})
 
-@app.route('/gender_model', methods=['GET'])
-def get_gender_model():
-    inter = gender.intercept_.tolist()
-    coefs = gender.coef_.tolist()
-    params = {"model": str(gender),"intercept": inter, "coefficients":coefs}
-    params.update(gender.get_params())
-    return jsonify(params)
-
-
 
 @app.route('/gender_model', methods=['GET'])
 def get_gender_model():
