@@ -1,13 +1,11 @@
 import os
 from flask import Flask, jsonify, request
-import app as flask_app
 import json
 #from prediction import predict
 import pickle
 import numpy as np
 HEADERS = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
-App = flask_app.factory.create_app(celery=flask_app.celery)
 
 def flask_app():
     app = Flask(__name__)
@@ -47,10 +45,11 @@ def flask_app():
         y_pred = gender.predict(x)[0]
         return jsonify({"predict gender":y_pred})
 
-
-
     return app
 
 if __name__ == '__main__':
     app = flask_app()
-    app.run(debug=True, host='0.0.0.0')
+    # This is used when running locally only. When deploying to Google App
+    # Engine, a webserver process such as Gunicorn will serve the app. This
+    # can be configured by adding an `entrypoint` to app.yaml.
+    app.run(host='127.0.0.1', port=8080, debug=True)
