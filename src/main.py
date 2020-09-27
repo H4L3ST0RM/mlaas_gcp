@@ -14,7 +14,7 @@ def flask_app():
     weight= pickle.load(open('./weight_predictor.pkl', 'rb'))
 
 
-    @app.route('/', methods=['GET'])
+    @app.route('/')
     def server_is_up():
         return 'server is up'
 
