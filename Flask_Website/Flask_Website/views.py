@@ -46,9 +46,9 @@ def about():
     )
 
 
-gender = pickle.load(open('./Flask_Website/gender_predictor.pkl', 'rb'))
-height = pickle.load(open('./Flask_Website/height_predictor.pkl', 'rb'))
-weight= pickle.load(open('./Flask_Website/weight_predictor.pkl', 'rb'))
+gender = pickle.load(open('./gender_predictor.pkl', 'rb'))
+height = pickle.load(open('./height_predictor.pkl', 'rb'))
+weight= pickle.load(open('./weight_predictor.pkl', 'rb'))
 
 
 @app.route('/api')
