@@ -1,7 +1,8 @@
-flask
-pandas
-numpy
-pickle
 json
 os
 datetime
+pandas	
+numpy	
+flask	
+scikit-learn	
+pickle-mixin
