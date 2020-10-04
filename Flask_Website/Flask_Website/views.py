@@ -5,6 +5,14 @@ Routes and views for the flask application.
 from datetime import datetime
 from flask import render_template
 from Flask_Website import app
+import os
+from flask import Flask, jsonify, request
+import json
+#from prediction import predict
+from flask import Flask
+import pickle
+import numpy as np
+
 
 @app.route('/')
 @app.route('/home')
@@ -25,13 +33,7 @@ def contact():
         year=datetime.now().year,
         message='Your contact page.'
     )
-import os
-from flask import Flask, jsonify, request
-import json
-#from prediction import predict
-from flask import Flask
-import pickle
-import numpy as np
+
 
 @app.route('/about')
 def about():
