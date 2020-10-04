@@ -1,3 +1,30 @@
+"""
+Routes and views for the flask application.
+"""
+
+from datetime import datetime
+from flask import render_template
+from Flask_Website import app
+
+@app.route('/')
+@app.route('/home')
+def home():
+    """Renders the home page."""
+    return render_template(
+        'index.html',
+        title='Home Page',
+        year=datetime.now().year,
+    )
+
+@app.route('/contact')
+def contact():
+    """Renders the contact page."""
+    return render_template(
+        'contact.html',
+        title='Contact',
+        year=datetime.now().year,
+        message='Your contact page.'
+    )
 import os
 from flask import Flask, jsonify, request
 import json
@@ -5,20 +32,28 @@ import json
 from flask import Flask
 import pickle
 import numpy as np
-HEADERS = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+
+@app.route('/about')
+def about():
+    """Renders the about page."""
+    return render_template(
+        'about.html',
+        title='About',
+        year=datetime.now().year,
+        message='Your application description page.'
+    )
 
 
-app = Flask(__name__)
-gender = pickle.load(open('./gender_predictor.pkl', 'rb'))
-height = pickle.load(open('./height_predictor.pkl', 'rb'))
-weight= pickle.load(open('./weight_predictor.pkl', 'rb'))
+gender = pickle.load(open('./Flask_Website/gender_predictor.pkl', 'rb'))
+height = pickle.load(open('./Flask_Website/height_predictor.pkl', 'rb'))
+weight= pickle.load(open('./Flask_Website/weight_predictor.pkl', 'rb'))
 
 
-@app.route('/')
+@app.route('/api')
 def server_is_up():
     return 'server is up'
 
-@app.route('/predict_weight', methods=['POST'])
+@app.route('/api/predict_weight', methods=['POST'])
 def predict_weight():
     to_predict = request.json
     x = np.array([float(to_predict[col]) for col in ["gender","height"]])
@@ -27,7 +62,7 @@ def predict_weight():
     y_pred = weight.predict(x)[0]
     return jsonify({"predict weight":y_pred})
 
-@app.route('/predict_height', methods=['POST'])
+@app.route('/api/predict_height', methods=['POST'])
 def predict_height():
     to_predict = request.json
     x = np.array([float(to_predict[col]) for col in ["gender","weight"]])
@@ -36,7 +71,7 @@ def predict_height():
     y_pred = height.predict(x)[0]
     return jsonify({"predict height":y_pred})
 
-@app.route('/predict_gender', methods=['POST'])
+@app.route('/api/predict_gender', methods=['POST'])
 def predict_gender():
     to_predict = request.json
     x = np.array([float(to_predict[col]) for col in ["height","weight"]])
@@ -46,7 +81,7 @@ def predict_gender():
     return jsonify({"predict gender":y_pred})
 
 
-@app.route('/gender_model', methods=['GET'])
+@app.route('/api/gender_model', methods=['GET'])
 def get_gender_model():
     inter = gender.intercept_.tolist()
     coefs = gender.coef_.tolist()
@@ -55,7 +90,7 @@ def get_gender_model():
     return jsonify(params)
 
 
-@app.route('/height_model', methods=['GET'])
+@app.route('/api/height_model', methods=['GET'])
 def get_height_model():
     inter = height.intercept_.tolist()
     coefs = height.coef_.tolist()
@@ -64,17 +99,10 @@ def get_height_model():
     return jsonify(params)
 
 
-@app.route('/weight_model', methods=['GET'])
+@app.route('/api/weight_model', methods=['GET'])
 def get_weight_model():
     inter = weight.intercept_.tolist()
     coefs = weight.coef_.tolist()
     params = {"model": str(weight),"intercept": inter, "coefficients":coefs}
     params.update(weight.get_params())
     return jsonify(params)
-
-if __name__ == '__main__':
-    # This is used when running locally only. When deploying to Google App
-    # Engine, a webserver process such as Gunicorn will serve the app. This
-    # can be configured by adding an `entrypoint` to app.yaml.
-    app.run(host='127.0.0.1', port=8080, debug=True)
-
