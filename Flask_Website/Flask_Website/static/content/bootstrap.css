@@ -4934,7 +4934,7 @@ a.list-group-item.active > .badge,
   font-weight: 200;
   line-height: 2.1428571435;
   color: inherit;
-  background-image: url('./Flask_Website/img/first_race.jpg');
+  background-image: url('./Flask_Website/img/first_race.jpg') no-repeat center center;
   /*background-color: #eeeeee;*/
 }
 
